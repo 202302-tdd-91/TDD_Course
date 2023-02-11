@@ -181,5 +181,33 @@ namespace TDD_Course
 
             Assert.AreEqual(2000 + 31000 + 5.00, budgetService.Query(startTime, endTime));
         }
+        
+        [Test]
+        public void test_cross_three_month_and_cross_year()
+        {
+            budgetRepo.getAll().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "202311",
+                    Amount = 300
+                },
+                new Budget
+                {
+                    YearMonth = "202312",
+                    Amount = 31
+                },
+                new Budget
+                {
+                    YearMonth = "202401",
+                    Amount = 31
+                },
+            });
+
+            DateTime startTime = new DateTime(2023, 11, 30);
+            DateTime endTime = new DateTime(2024, 1, 5);
+
+            Assert.AreEqual(10 + 31 + 5.00, budgetService.Query(startTime, endTime));
+        }
     }
 }
