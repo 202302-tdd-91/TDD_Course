@@ -22,8 +22,19 @@ namespace TDD_Course
             if (SameMonth(startTime, endTime))
             {
                 var range = endTime - startTime;
-                var start = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) * (range.Days + 1);
-                return start;
+                var budget = 0;
+                
+                if (startBudget == null)
+                {
+                    budget = 0;
+                }
+                else
+                {
+                    budget = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) *
+                                (range.Days + 1);
+                }
+
+                return budget;
             }
             else
             {

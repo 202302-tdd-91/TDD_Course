@@ -58,6 +58,42 @@ namespace TDD_Course
         }
 
         [Test]
+        public void test_one_month_no_budget_but_other_month_have_budget()
+        {
+            budgetRepo.getAll().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "202304",
+                    Amount = 100
+                }
+            });
+
+            DateTime startTime = new DateTime(2023, 3, 1);
+            DateTime endTime = new DateTime(2023, 3, 31);
+
+            Assert.AreEqual(0.00, budgetService.Query(startTime, endTime));
+        }
+        
+        [Test]
+        public void test_one_month_no_budget()
+        {
+            budgetRepo.getAll().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "202304",
+                    Amount = 0
+                }
+            });
+
+            DateTime startTime = new DateTime(2023, 3, 1);
+            DateTime endTime = new DateTime(2023, 3, 31);
+
+            Assert.AreEqual(0.00, budgetService.Query(startTime, endTime));
+        }
+        
+        [Test]
         public void test_cross_month()
         {
             budgetRepo.getAll().Returns(new List<Budget>
