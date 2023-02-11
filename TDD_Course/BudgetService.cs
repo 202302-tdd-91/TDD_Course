@@ -16,15 +16,13 @@ namespace TDD_Course
         public double Query(DateTime startTime, DateTime endTime)
         {
             var result = budgetRepo.getAll();
-            //var range = endTime - startTime;
             var startBudget = GetMonthBudget(startTime, result);
             var endBudget = GetMonthBudget(endTime, result);
 
             if (SameMonth(startTime, endTime))
             {
                 var range = endTime - startTime;
-                var start = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) *
-                            (range.Days + 1);
+                var start = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) * (range.Days + 1);
                 return start;
             }
             else

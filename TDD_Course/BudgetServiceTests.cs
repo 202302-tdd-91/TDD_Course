@@ -56,7 +56,7 @@ namespace TDD_Course
 
             Assert.AreEqual(31000.00, budgetService.Query(startTime, endTime));
         }
-        
+
         [Test]
         public void test_cross_month()
         {
@@ -79,7 +79,7 @@ namespace TDD_Course
 
             Assert.AreEqual(2001.00, budgetService.Query(startTime, endTime));
         }
-        
+
         [Test]
         public void test_cross_three_month()
         {
@@ -111,6 +111,39 @@ namespace TDD_Course
             DateTime endTime = new DateTime(2023, 6, 5);
 
             Assert.AreEqual(37000.00, budgetService.Query(startTime, endTime));
+        }
+        
+        [Test]
+        public void test_cross_three_month_reverse()
+        {
+            budgetRepo.getAll().Returns(new List<Budget>
+            {
+                new Budget
+                {
+                    YearMonth = "202306",
+                    Amount = 30
+                },
+                new Budget
+                {
+                    YearMonth = "202305",
+                    Amount = 31000
+                },
+                new Budget
+                {
+                    YearMonth = "202304",
+                    Amount = 0
+                },
+                new Budget
+                {
+                    YearMonth = "202303",
+                    Amount = 31000
+                }
+            });
+
+            DateTime startTime = new DateTime(2023, 3, 30);
+            DateTime endTime = new DateTime(2023, 6, 5);
+
+            Assert.AreEqual(2000 + 31000 + 5.00, budgetService.Query(startTime, endTime));
         }
     }
 }
