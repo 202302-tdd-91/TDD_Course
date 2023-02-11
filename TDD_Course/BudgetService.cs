@@ -30,14 +30,25 @@ namespace TDD_Course
             else
             {
                 var range = DateTime.DaysInMonth(startTime.Year, startTime.Month) - startTime.Day;
-                var start = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) *
-                            (range + 1);
-  
-                var end = endBudget.Amount/DateTime.DaysInMonth(endTime.Year, endTime.Month)*endTime.Day;
-                    return end + start;
-                
+                var start = startBudget.Amount / DateTime.DaysInMonth(startTime.Year, startTime.Month) * (range + 1);
+                var end = endBudget.Amount / DateTime.DaysInMonth(endTime.Year, endTime.Month) * endTime.Day;
+
+                var currentTemp = startTime.AddMonths(1);
+                var current = new DateTime(currentTemp.Year, currentTemp.Month, 1);
+                var middleAmount = 0;
+
+                while (current < new DateTime(endTime.Year, endTime.Month, 1))
+                {
+                    var budget = result.Find(x => x.YearMonth == current.ToString("yyyyMM"));
+                    
+                    middleAmount += budget?.Amount ?? 0;
+
+                    current = current.AddMonths(1);
+                }
+
+                return end + start + middleAmount;
             }
-            
+
 
             return 0;
         }
